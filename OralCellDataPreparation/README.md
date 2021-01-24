@@ -1,7 +1,5 @@
 # Oral Cell Data Preparation
 
-[TOC]
-
 ## Dependencies
 
 - [NDPITools](https://www.imnc.in2p3.fr/pagesperso/deroulers/software/ndpitools/) (choose NDPITools software version, independent of ImageJ)
