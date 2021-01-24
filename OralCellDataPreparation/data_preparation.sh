@@ -45,11 +45,11 @@ cd OralCellDataPreparation
 # generate predicted masks
 python3 predict_mask.py
 
-# call ImageJ for blob anaysis and generate .csv results for detected locations
+# call ImageJ for blob analysis and generate .csv results for detected locations
 ImageJ --headless -macro particle_analysis_fixedDirectory.ijm
 
 # generate patches at all Z level
-python3 predict_patch.py
+python3 extract_patch.py
 
 # select the most focused patch for each location
 nohup python3 select_focus.py >./nohup.out 2>./nohup.err &

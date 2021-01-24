@@ -1,10 +1,30 @@
 # Oral Cell Data Preparation
 
+[TOC]
+
 ## Dependencies
 
 - [NDPITools](https://www.imnc.in2p3.fr/pagesperso/deroulers/software/ndpitools/) (choose NDPITools software version, independent of ImageJ)
 - [Install MATLAB Engine API for Python](https://ww2.mathworks.cn/help/matlab/matlab_external/install-the-matlab-engine-for-python.html?lang=en) 
 - Other packages for python
+
+## Explanation
+
+[`data_preparation.sh`](./data_preparation.sh) includes the steps to prepare all nucleus patches for classification. 
+
+<details>
+<summary>Explanations of main steps</summary>
+
+1. `ndpisplit` uses [NDPITools](https://www.imnc.in2p3.fr/pagesperso/deroulers/software/ndpitools/) to split the NDPI files into smaller pieces. 
+	
+    This should generate 512 jpg images of size 6496*3360px for each slide, indexing from `i01j01` to `i32j16`. (It takes about 1h to split one whole slide.)
+2. [`predict_mask.py`](./predict_mask.py) is used to infer fuzzy prediction masks for nucleus locations.
+3. ImageJ macro script [`particle_analysis_fixedDirectory.ijm`](./particle_analysis_fixedDirectory.ijm) (or [`particle_analysis.ijm`](./particle_analysis.ijm)) is called to run blob analysis and extract the detected nucleus coordinates to CSV files.
+4. [`extract_patch.py`](./extract_patch.py) is used to cut out nuclei **at all z-levels** (according to the detected nucleus coordinates in CSV files).
+5. [`select_focus.py`](./select_focus.py) is used to select the most focused patch for each nucleus location.
+   
+    Or alternatively, `./select_focus_parallel.sh N` does this step using N processes in parallel.
+</details>
 
 ## Usage
 
